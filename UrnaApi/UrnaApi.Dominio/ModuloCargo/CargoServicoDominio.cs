@@ -32,7 +32,7 @@ namespace UrnaApi.Dominio.ModuloCargo
 
         public List<Cargo> FindByName(string nome)
         {
-            return this.repositorio.FindByName(name);
+            return this.repositorio.FindByName(nome);
         }
     }
 }

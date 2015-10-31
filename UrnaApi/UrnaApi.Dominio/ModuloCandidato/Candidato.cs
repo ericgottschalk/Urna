@@ -17,7 +17,7 @@ namespace UrnaApi.Dominio.ModuloCandidato
 
         public string RegistroTRE { get; set; }
 
-        public int IdCargo { get; set; }
+        public int IdPartido { get; set; }
 
         public int Numero { get; set; }
 
