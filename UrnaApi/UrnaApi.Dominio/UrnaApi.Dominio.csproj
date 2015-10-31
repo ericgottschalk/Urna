@@ -39,6 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcessoDados\CandidatoRepositorio.cs" />
+    <Compile Include="AcessoDados\CargoRepositorio.cs" />
+    <Compile Include="AcessoDados\EleitorRepositorio.cs" />
+    <Compile Include="AcessoDados\PartidoRepositorio.cs" />
     <Compile Include="Comum\EntidadeBase.cs" />
     <Compile Include="Comum\IRepositorio.cs" />
     <Compile Include="ModuloCandidato\Candidato.cs" />

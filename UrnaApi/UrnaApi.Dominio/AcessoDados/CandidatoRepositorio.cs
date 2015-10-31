@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UrnaApi.Dominio.ModuloCandidato;
+
+namespace UrnaApi.Dominio.AcessoDados
+{
+    public class CandidatoRepositorio : ICandidatoRepositorio
+    {
+        public void Excluir(Candidato item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Cadastrar(Candidato item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Editar(Candidato item)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
