@@ -12,5 +12,9 @@ namespace UrnaApi.Dominio.Comum
         void Cadastrar(T item);
 
         void Editar(T item);
+
+        T FindById(int id);
+
+        List<T> FindByName(string name);
     }
 }

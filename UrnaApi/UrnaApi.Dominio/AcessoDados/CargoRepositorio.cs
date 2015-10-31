@@ -18,5 +18,15 @@ namespace UrnaApi.Dominio.AcessoDados
         {
             throw new NotImplementedException();
         }
+
+        public Cargo FindById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Cargo> FindByName(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

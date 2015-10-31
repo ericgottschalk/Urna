@@ -46,13 +46,17 @@
     <Compile Include="Comum\EntidadeBase.cs" />
     <Compile Include="Comum\IRepositorio.cs" />
     <Compile Include="ModuloCandidato\Candidato.cs" />
+    <Compile Include="ModuloCandidato\CandidatoServicoDominio.cs" />
     <Compile Include="ModuloCandidato\ICandidatoRepositorio.cs" />
     <Compile Include="ModuloCargo\Cargo.cs" />
+    <Compile Include="ModuloCargo\CargoServicoDominio.cs" />
     <Compile Include="ModuloCargo\ICargoRepositorio.cs" />
     <Compile Include="ModuloEleitor\Eleitor.cs" />
+    <Compile Include="ModuloEleitor\EleitorServicoDominio.cs" />
     <Compile Include="ModuloEleitor\IEleitorRepositorio.cs" />
     <Compile Include="ModuloPartido\IPartidoRepositorio.cs" />
     <Compile Include="ModuloPartido\Partido.cs" />
+    <Compile Include="ModuloPartido\PartidoServicoDominio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -23,5 +23,15 @@ namespace UrnaApi.Dominio.AcessoDados
         {
             throw new NotImplementedException();
         }
+
+        public Eleitor FindById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Eleitor> FindByName(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
