@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using UrnaApi.Dominio.Comum;
 
-namespace UrnaApi.Dominio.ModuloCargo
+namespace UrnaApi.Dominio.ModuloEleitor
 {
-    public interface IRepositorioCargo : IRepositorio<Cargo>
+    public interface IEleitorRepositorio : IRepositorio<Eleitor>
     {
+        void Excluir(Eleitor eleitor);
     }
 }

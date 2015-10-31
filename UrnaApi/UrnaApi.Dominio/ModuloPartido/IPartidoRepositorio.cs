@@ -7,7 +7,7 @@ using UrnaApi.Dominio.Comum;
 
 namespace UrnaApi.Dominio.ModuloPartido
 {
-    public interface IRepositorioPartido : IRepositorio<Partido>
+    public interface IPartidoRepositorio : IRepositorio<Partido>
     { 
         void Excluir(Partido partido);
     }

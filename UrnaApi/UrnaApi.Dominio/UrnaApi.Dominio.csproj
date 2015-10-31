@@ -44,10 +44,10 @@
     <Compile Include="ModuloCandidato\Candidato.cs" />
     <Compile Include="ModuloCandidato\ICandidatoRepositorio.cs" />
     <Compile Include="ModuloCargo\Cargo.cs" />
-    <Compile Include="ModuloCargo\IRepositorioCargo.cs" />
+    <Compile Include="ModuloCargo\ICargoRepositorio.cs" />
     <Compile Include="ModuloEleitor\Eleitor.cs" />
-    <Compile Include="ModuloEleitor\IRepositorioEleitor.cs" />
-    <Compile Include="ModuloPartido\IRepositorioPartido.cs" />
+    <Compile Include="ModuloEleitor\IEleitorRepositorio.cs" />
+    <Compile Include="ModuloPartido\IPartidoRepositorio.cs" />
     <Compile Include="ModuloPartido\Partido.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
