@@ -25,7 +25,7 @@ namespace UrnaApi.Dominio.ModuloPartido
             this.repositorio.Editar(partido);
         }
 
-        public void Exluir(Partido partido)
+        public void Excluir(Partido partido)
         {
             this.repositorio.Excluir(partido);
         }

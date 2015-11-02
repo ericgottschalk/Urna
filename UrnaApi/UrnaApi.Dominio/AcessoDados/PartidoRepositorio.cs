@@ -15,9 +15,9 @@ namespace UrnaApi.Dominio.AcessoDados
     public class PartidoRepositorio : IPartidoRepositorio
     {
         private readonly string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+
         public void Excluir(Partido partido)
         {
-
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -37,7 +37,8 @@ namespace UrnaApi.Dominio.AcessoDados
         public void Cadastrar(Partido item)
         {
             List<Partido> partidoEncontrado = FindByName(item.Nome);
-            if (partidoEncontrado.TrueForAll(partido=>partido.Nome == item.Nome) && partidoEncontrado.TrueForAll(partido=>partido.Slogan == item.Slogan))
+            if (partidoEncontrado.FindAll(partido => partido.Nome == item.Nome).Count != 0
+                && partidoEncontrado.FindAll(partido => partido.Slogan == item.Slogan).Count != 0)
             {
                 throw new Exception("Nome e slogan ja existentes.");
             }
@@ -63,7 +64,8 @@ namespace UrnaApi.Dominio.AcessoDados
         public void Editar(Partido item)
         {
             List<Partido> partidoEncontrado = FindByName(item.Nome);
-            if (partidoEncontrado.TrueForAll(partido => partido.Nome == item.Nome) && partidoEncontrado.TrueForAll(partido => partido.Slogan == item.Slogan))
+            if (partidoEncontrado.FindAll(partido => partido.Nome == item.Nome).Count != 0
+                && partidoEncontrado.FindAll(partido => partido.Slogan == item.Slogan).Count != 0)
             {
                 throw new Exception("Nome e slogan ja existentes.");
             }
@@ -89,13 +91,13 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public Partido FindById(int id)
         {
-            Partido partidoEncontrado = null;
-
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
+                Partido partidoEncontrado = null;
+
                 IDbCommand comando = connection.CreateCommand();
                 comando.CommandText =
-                    "SELECT IDPartido,Nome,Slogan,Sigla FROM Cargo WHERE IDPartido = @paramIDPartido";
+                    "SELECT IDPartido,Nome,Slogan,Sigla FROM Partido WHERE IDPartido = @paramIDPartido";
 
                 comando.AddParameter("paramIDPartido", id);
 
@@ -116,20 +118,19 @@ namespace UrnaApi.Dominio.AcessoDados
                         Sigla = sigla
                     };
                 }
-                connection.Close();
-            }
 
-            return partidoEncontrado;
+                return partidoEncontrado;
+            }
         }
 
         public List<Partido> FindByName(string name)
         {
-            List<Partido> partidosEncontrados = new List<Partido>();
-
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
+                List<Partido> partidosEncontrados = new List<Partido>();
+
                 IDbCommand comando = connection.CreateCommand();
-                comando.CommandText = "SELECT IDPartido,Nome,Slogan,Sigla FROM Cargo WHERE Nome LIKE '%' + @paramNome + '%'";
+                comando.CommandText = "SELECT IDPartido,Nome,Slogan,Sigla FROM Partido WHERE Nome LIKE '%' + @paramNome + '%'";
                 comando.AddParameter("paramNome", name);
                 connection.Open();
                 IDataReader reader = comando.ExecuteReader();
@@ -147,11 +148,12 @@ namespace UrnaApi.Dominio.AcessoDados
                         Slogan = slogan,
                         Sigla = sigla
                     };
+
                     partidosEncontrados.Add(partidoEncontrado);
                 }
-                connection.Close();
+
+                return partidosEncontrados;
             }
-            return partidosEncontrados;
         }
     }
 }
