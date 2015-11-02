@@ -10,5 +10,11 @@ namespace UrnaApi.Dominio.ModuloEleitor
     public interface IEleitorRepositorio : IRepositorio<Eleitor>
     {
         void Excluir(Eleitor eleitor);
+
+        Eleitor BuscarPorCpf(string cpf);
+
+        Eleitor BuscarPorTituloEleitor(string titulo);
+
+        Eleitor BuscarPorRG(string rg);
     }
 }

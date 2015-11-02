@@ -25,6 +25,6 @@ namespace UrnaApi.Dominio.ModuloEleitor
 
         public char Situacao { get; set; }
 
-        public bool Votou { get; set; }
+        public char Votou { get; set; }
     }
 }
