@@ -102,7 +102,35 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public List<Partido> FindByName(string name)
         {
-            throw new NotImplementedException();
+            List<Partido> partidosEncontrados = new List<Partido>();
+
+            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
+                IDbCommand comando = connection.CreateCommand();
+                comando.CommandText = "SELECT IDPartido,Nome,Slogan,Sigla FROM Cargo WHERE Nome = @paramNome";
+                comando.AddParameter("paramNome", name);
+                connection.Open();
+                IDataReader reader = comando.ExecuteReader();
+                while (reader.Read())
+                {
+                    int idDb = Convert.ToInt32(reader["IDPartido"]);
+                    string nome = reader["Nome"].ToString();
+                    string slogan = reader["Slogan"].ToString();
+                    string sigla = reader["Sigla"].ToString();
+
+                    Partido partidoEncontrado = new Partido()
+                    {
+                        Id = idDb,
+                        Nome = nome,
+                        Slogan = slogan,
+                        Sigla = sigla
+                    };
+                    partidosEncontrados.Add(partidoEncontrado);
+                }
+                connection.Close();
+            }
+            return partidosEncontrados;
         }
     }
 }
