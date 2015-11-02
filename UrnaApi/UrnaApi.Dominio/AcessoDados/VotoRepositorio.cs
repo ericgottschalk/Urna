@@ -8,15 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using UrnaApi.Dominio.ModuloVoto;
 
 namespace UrnaApi.Dominio.AcessoDados
 {
-    public class VotoRepositorio
+    public class VotoRepositorio : IVotoRepositorio
     {
+        private readonly string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+
         public bool VerificaSeVotou(string cpf)
         {
             bool eleitorVotou = false;
-            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+            
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 IDbCommand comando = connection.CreateCommand();
@@ -38,19 +41,20 @@ namespace UrnaApi.Dominio.AcessoDados
             }
             return eleitorVotou;
         }
-        public void RegistrarVoto(string cpf,int idcandidato)
+
+        public void RegistrarVoto(string cpf,int idCandidato)
         {
             if (!VerificaSeVotou(cpf))
             {
                 throw new Exception("O eleitor com esse CPF já votou");
             }
-            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 IDbCommand comandoInsere = connection.CreateCommand();
                 comandoInsere.CommandText = "INSERT INTO Voto (IDCandidato) VALUES (@paramIDCandidato)";
-                comandoInsere.AddParameter("paramIDCandidato", idcandidato);
+                comandoInsere.AddParameter("paramIDCandidato", idCandidato);
 
                 IDbCommand comandoAtualiza = connection.CreateCommand();
                 comandoAtualiza.CommandText = "UPDATE Eleitor SET Votou = 'S' WHERE CPF = @paramCPF";

@@ -45,6 +45,7 @@
     <Compile Include="AcessoDados\CargoRepositorio.cs" />
     <Compile Include="AcessoDados\EleitorRepositorio.cs" />
     <Compile Include="AcessoDados\PartidoRepositorio.cs" />
+    <Compile Include="AcessoDados\VotoRepositorio.cs" />
     <Compile Include="Comum\EntidadeBase.cs" />
     <Compile Include="Comum\IRepositorio.cs" />
     <Compile Include="ModuloCandidato\Candidato.cs" />
@@ -59,6 +60,9 @@
     <Compile Include="ModuloPartido\IPartidoRepositorio.cs" />
     <Compile Include="ModuloPartido\Partido.cs" />
     <Compile Include="ModuloPartido\PartidoServicoDominio.cs" />
+    <Compile Include="ModuloVoto\IVotoRepositorio.cs" />
+    <Compile Include="ModuloVoto\Voto.cs" />
+    <Compile Include="ModuloVoto\VotoServicoDominio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
