@@ -110,7 +110,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
                 IDbCommand cmd = connection.CreateCommand();
 
-                cmd.CommandText = "SELECT * FROM Candidato WHERE IdCandidato = @paramId";
+                cmd.CommandText = "SELECT IDCandidato,NomeCompleto,NomePopular,DataNascimento,RegistroTRE,IDPartido,Foto,Numero,IDCargo,Exibe FROM Candidato WHERE IdCandidato = @paramId";               
                 cmd.AddParameter("paramId", id);
                 connection.Open();
 
@@ -133,7 +133,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
                 IDbCommand cmd = connection.CreateCommand();
 
-                cmd.CommandText = "SELECT * FROM Candidato WHERE NomeCompleto LIKE '%' + @paramNome + '%'";
+                cmd.CommandText = "SELECT IDCandidato,NomeCompleto,NomePopular,DataNascimento,RegistroTRE,IDPartido,Foto,Numero,IDCargo,Exibe FROM Candidato WHERE NomeCompleto LIKE '%' + @paramNome + '%'";
                 cmd.AddParameter("paramNome", name);
                 connection.Open();
 
@@ -156,7 +156,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
                 IDbCommand cmd = connection.CreateCommand();
 
-                cmd.CommandText = "SELECT * FROM Candidato WHERE NomePopular = @paramNomePopular";
+                cmd.CommandText = "SELECT IDCandidato,NomeCompleto,NomePopular,DataNascimento,RegistroTRE,IDPartido,Foto,Numero,IDCargo,Exibe FROM Candidato WHERE NomePopular = @paramNomePopular";
                 cmd.AddParameter("paramNomePopular", nome);
                 connection.Open();
 
@@ -179,7 +179,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
                 IDbCommand cmd = connection.CreateCommand();
 
-                cmd.CommandText = "SELECT * FROM Candidato WHERE RegistroTRE = @paramRegistroTRE";
+                cmd.CommandText = "SELECT IDCandidato,NomeCompleto,NomePopular,DataNascimento,RegistroTRE,IDPartido,Foto,Numero,IDCargo,Exibe FROM Candidato WHERE RegistroTRE = @paramRegistroTRE";
                 cmd.AddParameter("paramRegistroTRE", registro);
                 connection.Open();
 
@@ -202,7 +202,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
                 IDbCommand cmd = connection.CreateCommand();
 
-                cmd.CommandText = "SELECT * FROM Candidato WHERE Numero = @paramNumero";
+                cmd.CommandText = "SELECT IDCandidato,NomeCompleto,NomePopular,DataNascimento,RegistroTRE,IDPartido,Foto,Numero,IDCargo,Exibe FROM Candidato WHERE Numero = @paramNumero";
                 cmd.AddParameter("paramNumero", numero);
                 connection.Open();
 
@@ -225,7 +225,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
                 IDbCommand cmd = connection.CreateCommand();
 
-                string cmdTxt = "SELECT * FROM Candidato INNER JOIN Cargo CA ON CA.IDCargo = Candidato.IDCargo WHERE Candidato.IdPartido = @paramIdPartido AND CA.Nome = 'Prefeito' AND Candidato.NomeCompleto <> 'Voto Nulo' AND Candidato.NomeCompleto <> 'Voto em Branco'";
+                string cmdTxt = "SELECT IDCandidato,NomeCompleto,NomePopular,DataNascimento,RegistroTRE,IDPartido,Foto,Numero,IDCargo,Exibe FROM Candidato INNER JOIN Cargo CA ON CA.IDCargo = Candidato.IDCargo WHERE Candidato.IdPartido = @paramIdPartido AND CA.Nome = 'Prefeito' AND Candidato.NomeCompleto <> 'Voto Nulo' AND Candidato.NomeCompleto <> 'Voto em Branco'";
 
                 cmd.CommandText = cmdTxt;
                 cmd.AddParameter("paramIdPartido", IdPartido);
@@ -283,12 +283,12 @@ namespace UrnaApi.Dominio.AcessoDados
         {
             return new Candidato()
             {
-                Id = Convert.ToInt32(reader["IdCandidato"]),
+                Id = Convert.ToInt32(reader["IDCandidato"]),
                 NomeCompleto = reader["NomeCompleto"].ToString(),
                 NomePopular = reader["NomePopular"].ToString(),
                 DataNascimento = Convert.ToDateTime(reader["DataNascimento"]),
                 RegistroTRE = reader["RegistroTRE"].ToString(),
-                IdPartido = Convert.ToInt32(reader["idPartido"]),
+                IdPartido = Convert.ToInt32(reader["IDPartido"]),
                 IdCargo = Convert.ToInt32(reader["IDCargo"]),
                 Numero = Convert.ToInt32(reader["Numero"]),
                 Exibe = Convert.ToBoolean(Convert.ToInt32(reader["Exibe"])),
