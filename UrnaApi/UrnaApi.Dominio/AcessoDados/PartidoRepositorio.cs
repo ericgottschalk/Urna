@@ -61,7 +61,29 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public void Editar(Partido item)
         {
-            throw new NotImplementedException();
+            List<Partido> partidoEncontrado = FindByName(item.Nome);
+            if (partidoEncontrado.TrueForAll(partido => partido.Nome == item.Nome) && partidoEncontrado.TrueForAll(partido => partido.Slogan == item.Slogan))
+            {
+                throw new Exception("Nome e slogan ja existentes.");
+            }
+            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+            using (TransactionScope transacao = new TransactionScope())
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
+                IDbCommand comando = connection.CreateCommand();
+                comando.CommandText =
+                    "UPDATE Partido SET Nome = @paramNome, Slogan = @paramSlogan, Sigla = @paramSigla WHERE IDPartido = @paramIDPartido";
+                comando.AddParameter("paramNome", item.Nome);
+                comando.AddParameter("paramSlogan", item.Slogan);
+                comando.AddParameter("paramSigla", item.Sigla);
+                comando.AddParameter("paramIDPartido", item.Id);
+                connection.Open();
+
+                comando.ExecuteNonQuery();
+
+                transacao.Complete();
+                connection.Close();
+            }
         }
 
         public Partido FindById(int id)
