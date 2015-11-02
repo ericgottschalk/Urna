@@ -15,9 +15,14 @@ namespace UrnaApi.Dominio.AcessoDados
     public class CandidatoRepositorio : ICandidatoRepositorio
     {
         private readonly string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
-
+        
         public void Excluir(Candidato item)
         {
+            if (item.NomeCompleto == "Voto Nulo" || item.NomeCompleto == "Voto em Branco")
+            {
+                throw new Exception("Candidato não pode ser excluido");
+            }
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -43,10 +48,9 @@ namespace UrnaApi.Dominio.AcessoDados
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 IDbCommand cmd = connection.CreateCommand();
-                cmd.CommandText = "INSERT INTO Candidato (idCandidato, nomeCompleto, nomePopular, dataNascimento, registroTRE, idPartido, foto, numero, idCargo, exibe)"
-                    + "VALUES (@paramId, @paramNomeCompleto, @paramNomePopular, @paramData, @paramRegistroTRE, @paramIDPartido, @paramFoto, @paramNumero, @paramIdCargo, @paramExibe)";
+                cmd.CommandText = "INSERT INTO Candidato (nomeCompleto, nomePopular, dataNascimento, registroTRE, idPartido, foto, numero, idCargo, exibe)"
+                    + "VALUES (@paramNomeCompleto, @paramNomePopular, @paramData, @paramRegistroTRE, @paramIDPartido, @paramFoto, @paramNumero, @paramIdCargo, @paramExibe)";
 
-                cmd.AddParameter("paramId", item.Id);
                 cmd.AddParameter("paramNomeCompleto", item.NomeCompleto);
                 cmd.AddParameter("paramNomePopular", item.NomePopular);
                 cmd.AddParameter("paramData", item.DataNascimento);
@@ -107,7 +111,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
                 IDbCommand cmd = connection.CreateCommand();
 
-                cmd.CommandText = "SELECT * FROM Candidado WHERE IdCandidato = @paramId";
+                cmd.CommandText = "SELECT * FROM Candidato WHERE IdCandidato = @paramId";
                 cmd.AddParameter("paramId", id);
                 connection.Open();
 
@@ -130,7 +134,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
                 IDbCommand cmd = connection.CreateCommand();
 
-                cmd.CommandText = "SELECT * FROM Candidado WHERE NomeCompleto LIKE '%@paramNome%'";
+                cmd.CommandText = "SELECT * FROM Candidato WHERE NomeCompleto LIKE '%' + @paramNome + '%'";
                 cmd.AddParameter("paramNome", name);
                 connection.Open();
 
@@ -153,7 +157,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
                 IDbCommand cmd = connection.CreateCommand();
 
-                cmd.CommandText = "SELECT * FROM Candidado WHERE NomePopular = @paramNomePopular";
+                cmd.CommandText = "SELECT * FROM Candidato WHERE NomePopular = @paramNomePopular";
                 cmd.AddParameter("paramNomePopular", nome);
                 connection.Open();
 
@@ -176,7 +180,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
                 IDbCommand cmd = connection.CreateCommand();
 
-                cmd.CommandText = "SELECT * FROM Candidado WHERE RegistroTRE = @paramRegistroTRE";
+                cmd.CommandText = "SELECT * FROM Candidato WHERE RegistroTRE = @paramRegistroTRE";
                 cmd.AddParameter("paramRegistroTRE", registro);
                 connection.Open();
 
@@ -199,7 +203,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
                 IDbCommand cmd = connection.CreateCommand();
 
-                cmd.CommandText = "SELECT * FROM Candidado WHERE Numero = @paramNumero";
+                cmd.CommandText = "SELECT * FROM Candidato WHERE Numero = @paramNumero";
                 cmd.AddParameter("paramNumero", numero);
                 connection.Open();
 
@@ -222,10 +226,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
                 IDbCommand cmd = connection.CreateCommand();
 
-                string cmdTxt = "SELECT * FROM Candidato C"
-                          + "INNER JOIN Cargo CA ON CA.IDCargo = C.IDCargo"
-                          + "WHERE C.IdPartido = @paramIdPartido AND CA.Nome = 'Prefeito'"
-                          + "AND C.NomeCompleto <> 'Voto Nulo' AND C.NomeCompleto <> 'Voto em Branco'";
+                string cmdTxt = "SELECT * FROM Candidato INNER JOIN Cargo CA ON CA.IDCargo = Candidato.IDCargo WHERE Candidato.IdPartido = @paramIdPartido AND CA.Nome = 'Prefeito' AND Candidato.NomeCompleto <> 'Voto Nulo' AND Candidato.NomeCompleto <> 'Voto em Branco'";
 
                 cmd.CommandText = cmdTxt;
                 cmd.AddParameter("paramIdPartido", IdPartido);
@@ -281,7 +282,7 @@ namespace UrnaApi.Dominio.AcessoDados
                 Id = Convert.ToInt32(reader["IdCandidato"]),
                 NomeCompleto = reader["NomeCompleto"].ToString(),
                 NomePopular = reader["NomePopular"].ToString(),
-                DataNascimento = Convert.ToDateTime(reader["DataNacimento"]),
+                DataNascimento = Convert.ToDateTime(reader["DataNascimento"]),
                 RegistroTRE = reader["RegistroTRE"].ToString(),
                 IdPartido = Convert.ToInt32(reader["idPartido"]),
                 IdCargo = Convert.ToInt32(reader["IDCargo"]),
