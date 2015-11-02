@@ -9,5 +9,6 @@ namespace UrnaApi.Dominio.ModuloCargo
 {
     public interface ICargoRepositorio : IRepositorio<Cargo>
     {
+        void MudarSituacao(Cargo cargo);
     }
 }

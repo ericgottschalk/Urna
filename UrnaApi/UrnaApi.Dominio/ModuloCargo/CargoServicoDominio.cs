@@ -34,5 +34,10 @@ namespace UrnaApi.Dominio.ModuloCargo
         {
             return this.repositorio.FindByName(nome);
         }
+
+        public void MudarSituacao(Cargo cargo)
+        {
+            this.repositorio.MudarSituacao(cargo);
+        }
     }
 }

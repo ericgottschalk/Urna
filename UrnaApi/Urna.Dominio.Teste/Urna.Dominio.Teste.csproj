@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CandidatoServicoDominioTest.cs" />
+    <Compile Include="CargoServicoDominioTest.cs" />
     <Compile Include="EleitorServicoDominioTest.cs" />
     <Compile Include="PartidoServicoDominioTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

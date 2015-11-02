@@ -15,6 +15,7 @@ namespace UrnaApi.Dominio.AcessoDados
     public class CargoRepositorio : ICargoRepositorio
     {
         private readonly string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+
         public void Cadastrar(Cargo item)
         {
             if (FindByName(item.Nome).Count != 0)
@@ -63,6 +64,7 @@ namespace UrnaApi.Dominio.AcessoDados
                 connection.Close();
             }
         }
+
         //mudar situação == ativar ou inativar o cargo
         public void MudarSituacao(Cargo cargo)
         {
@@ -70,6 +72,7 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("Este cargo não existe");
             }
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
