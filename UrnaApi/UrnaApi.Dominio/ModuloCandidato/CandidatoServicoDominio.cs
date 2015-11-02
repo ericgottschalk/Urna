@@ -39,5 +39,20 @@ namespace UrnaApi.Dominio.ModuloCandidato
         {
             return this.repositorio.FindByName(nome);
         }
+
+        public Candidato BuscarPorNomePopular(string nome)
+        {
+            return this.repositorio.BuscarPorNomePopular(nome);
+        }
+
+        public Candidato BuscarPorRegistroTRE(string registro)
+        {
+            return this.repositorio.BuscarPorRegistroTRE(registro);
+        }
+
+        public Candidato BuscarPorNumero(int numero)
+        {
+            return this.repositorio.BuscarPorNumero(numero);
+        }
     }
 }

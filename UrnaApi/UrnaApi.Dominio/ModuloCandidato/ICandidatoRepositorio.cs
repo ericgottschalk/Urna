@@ -12,5 +12,9 @@ namespace UrnaApi.Dominio.ModuloCandidato
         void Excluir(Candidato item);
 
         Candidato BuscarPorNomePopular(string nome);
+
+        Candidato BuscarPorRegistroTRE(string registro);
+
+        Candidato BuscarPorNumero(int numero);
     }
 }
