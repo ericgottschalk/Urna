@@ -225,7 +225,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
                 IDbCommand cmd = connection.CreateCommand();
 
-                string cmdTxt = "SELECT IDCandidato,NomeCompleto,NomePopular,DataNascimento,RegistroTRE,IDPartido,Foto,Numero,IDCargo,Exibe FROM Candidato INNER JOIN Cargo CA ON CA.IDCargo = Candidato.IDCargo WHERE Candidato.IdPartido = @paramIdPartido AND CA.Nome = 'Prefeito' AND Candidato.NomeCompleto <> 'Voto Nulo' AND Candidato.NomeCompleto <> 'Voto em Branco'";
+                string cmdTxt = "SELECT * FROM Candidato INNER JOIN Cargo ON Cargo.IDCargo = Candidato.IDCargo WHERE Candidato.IdPartido = @paramIdPartido AND Cargo.Nome = 'Prefeito' AND Candidato.NomeCompleto <> 'Voto Nulo' AND Candidato.NomeCompleto <> 'Voto em Branco'";
 
                 cmd.CommandText = cmdTxt;
                 cmd.AddParameter("paramIdPartido", IdPartido);
