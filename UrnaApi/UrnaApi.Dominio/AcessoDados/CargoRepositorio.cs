@@ -16,7 +16,7 @@ namespace UrnaApi.Dominio.AcessoDados
     {
         public void Cadastrar(Cargo item)
         {
-            if (FindByName(item.Nome).Count != 0 && FindById(item.Id) != null)
+            if (FindByName(item.Nome).Count != 0)
             {
                 throw new Exception("Este cargo já existe");
             }
@@ -33,6 +33,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
                 comando.ExecuteNonQuery();
 
+                transacao.Complete();
                 connection.Close();
             }
 
