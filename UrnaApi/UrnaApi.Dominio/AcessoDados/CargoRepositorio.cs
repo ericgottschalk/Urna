@@ -63,6 +63,36 @@ namespace UrnaApi.Dominio.AcessoDados
                 connection.Close();
             }
         }
+        //mudar situação == ativar ou inativar o cargo
+        public void MudarSituacao(Cargo cargo)
+        {
+            if(FindById(cargo.Id) == null)
+            {
+                throw new Exception("Este cargo não existe");
+            }
+            using (TransactionScope transacao = new TransactionScope())
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
+                IDbCommand comando = connection.CreateCommand();
+                comando.CommandText =
+                    "UPDATE Cargo SET Nome = @paramNome, Situacao = @paramSituacao WHERE IDCargo = @paramIDCargo";
+                comando.AddParameter("paramNome", cargo.Nome);
+                if(cargo.Situacao == 'A')
+                {
+                    comando.AddParameter("paramSituacao", 'I');
+                } else if(cargo.Situacao == 'I')
+                {
+                    comando.AddParameter("paramSituacao", 'A');
+                }                
+                comando.AddParameter("paramIDCargo", cargo.Id);
+                connection.Open();
+
+                comando.ExecuteNonQuery();
+
+                transacao.Complete();
+                connection.Close();
+            }
+        }
 
         public Cargo FindById(int id)
         {

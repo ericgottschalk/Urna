@@ -69,5 +69,27 @@ namespace UrnaApi.Dominio.AcessoDados
                 connection.Close();
             }
         }
+
+        public Dictionary<string,int> relaçãoCandidatoVoto()
+        {
+            Dictionary<string, int> relacaoCandidatoVoto = new Dictionary<string, int>();
+
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
+                IDbCommand comando = connection.CreateCommand();
+                comando.CommandText =
+                    "SELECT Candidato.NomePopular,COUNT(DISTINCT Voto.IDCandidato) as Votos FROM Candidato LEFT JOIN Voto ON Candidato.IDCandidato = Voto.IdCandidato GROUP BY Candidato.NomePopular;";
+
+                connection.Open();
+                IDataReader reader = comando.ExecuteReader();
+                while (reader.Read())
+                {
+                    string nomePopular = reader["NomePopular"].ToString();
+                    int votos = Convert.ToInt32(reader["Votos"]);
+                    relacaoCandidatoVoto.Add(nomePopular, votos);
+                }
+            }
+            return relacaoCandidatoVoto;
+        }
     }
 }
