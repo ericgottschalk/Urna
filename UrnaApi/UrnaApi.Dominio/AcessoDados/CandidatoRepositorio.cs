@@ -14,8 +14,8 @@ namespace UrnaApi.Dominio.AcessoDados
 {
     public class CandidatoRepositorio : ICandidatoRepositorio
     {
-        //private readonly string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
-        private readonly string connectionString = @"Data Source=ERIC\SQLEXPRESS;Initial Catalog=Urna_local;User ID=sa;Password=eric";
+        private readonly string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+        
         public void Excluir(Candidato item)
         {
             if (item.NomeCompleto == "Voto Nulo" || item.NomeCompleto == "Voto em Branco")
