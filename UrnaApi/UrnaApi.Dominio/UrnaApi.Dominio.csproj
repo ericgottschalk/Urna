@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DbExtensions\DbExtensions.csproj">
-      <Project>{a2b380d8-a1f0-4cca-a540-0780e37f581c}</Project>
+      <Project>{42acdb7a-2b6f-4b11-a525-dfe400b8ad6f}</Project>
       <Name>DbExtensions</Name>
     </ProjectReference>
   </ItemGroup>
