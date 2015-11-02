@@ -14,15 +14,16 @@ namespace UrnaApi.Dominio.AcessoDados
 {
     public class CargoRepositorio : ICargoRepositorio
     {
+        private readonly string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
         public void Cadastrar(Cargo item)
         {
             if (FindByName(item.Nome).Count != 0)
             {
                 throw new Exception("Este cargo já existe");
             }
-            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+
             using (TransactionScope transacao = new TransactionScope())
-            using (IDbConnection connection = new SqlConnection(connectionString))
+            using (IDbConnection connection = new SqlConnection(this.connectionString))
             {
                 IDbCommand comando = connection.CreateCommand();
                 comando.CommandText =
@@ -36,7 +37,6 @@ namespace UrnaApi.Dominio.AcessoDados
                 transacao.Complete();
                 connection.Close();
             }
-
         }
 
         public void Editar(Cargo item)
@@ -45,7 +45,7 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("Já existe um cargo com esse nome");
             }
-            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -68,7 +68,6 @@ namespace UrnaApi.Dominio.AcessoDados
         {
             Cargo cargoEncontrado = null;
 
-            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 IDbCommand comando = connection.CreateCommand();
@@ -102,12 +101,10 @@ namespace UrnaApi.Dominio.AcessoDados
         {
             List<Cargo> cargosEncontrados = new List<Cargo>();
 
-            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
-
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 IDbCommand comando = connection.CreateCommand();
-                comando.CommandText = "SELECT IDCargo,Nome,Situacao FROM Cargo WHERE Nome = @paramNome";
+                comando.CommandText = "SELECT IDCargo,Nome,Situacao FROM Cargo WHERE Nome LIKE '%' + @paramNome + '%'";
                 comando.AddParameter("paramNome", name);
                 connection.Open();
                 IDataReader reader = comando.ExecuteReader();
@@ -122,10 +119,13 @@ namespace UrnaApi.Dominio.AcessoDados
                         Nome =nome,
                         Situacao = situacao
                     };
+
                     cargosEncontrados.Add(cargoEncontrado);
                 }
+
                 connection.Close();
             }
+
             return cargosEncontrados;
         }
     }

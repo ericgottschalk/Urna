@@ -14,9 +14,10 @@ namespace UrnaApi.Dominio.AcessoDados
 {
     public class PartidoRepositorio : IPartidoRepositorio
     {
+        private readonly string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
         public void Excluir(Partido partido)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -40,7 +41,7 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("Nome e slogan ja existentes.");
             }
-            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+            
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -66,7 +67,7 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("Nome e slogan ja existentes.");
             }
-            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -90,7 +91,6 @@ namespace UrnaApi.Dominio.AcessoDados
         {
             Partido partidoEncontrado = null;
 
-            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 IDbCommand comando = connection.CreateCommand();
@@ -126,11 +126,10 @@ namespace UrnaApi.Dominio.AcessoDados
         {
             List<Partido> partidosEncontrados = new List<Partido>();
 
-            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 IDbCommand comando = connection.CreateCommand();
-                comando.CommandText = "SELECT IDPartido,Nome,Slogan,Sigla FROM Cargo WHERE Nome = @paramNome";
+                comando.CommandText = "SELECT IDPartido,Nome,Slogan,Sigla FROM Cargo WHERE Nome LIKE '%' + @paramNome + '%'";
                 comando.AddParameter("paramNome", name);
                 connection.Open();
                 IDataReader reader = comando.ExecuteReader();
