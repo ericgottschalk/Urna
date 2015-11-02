@@ -14,8 +14,8 @@ namespace UrnaApi.Dominio.AcessoDados
 {
     public class CandidatoRepositorio : ICandidatoRepositorio
     {
-        private readonly string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
-        
+        //private readonly string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+        private readonly string connectionString = @"Data Source=ERIC\SQLEXPRESS;Initial Catalog=Urna_local;User ID=sa;Password=eric";
         public void Excluir(Candidato item)
         {
             if (item.NomeCompleto == "Voto Nulo" || item.NomeCompleto == "Voto em Branco")
@@ -81,7 +81,7 @@ namespace UrnaApi.Dominio.AcessoDados
                 IDbCommand cmd = connection.CreateCommand();
                 cmd.CommandText = "UPDATE Candidato SET NomeCompleto = @paramNomeCompleto, NomePopular = @paramNomePopular,"
                                   + "RegistroTRE = @paramRegistroTRE, DataNascimento = @paramData, IdPartido = @paramIDPartido,"
-                                  + "Foto = @paramFoto, Numero = @paramNumero, @IdCargo = @paramIdCargo, Exibe = @paramExibe"
+                                  + "Foto = @paramFoto, Numero = @paramNumero, IdCargo = @paramIdCargo, Exibe = @paramExibe "
                                   + "WHERE IdCandidato = @paramId";
 
                 
@@ -245,6 +245,7 @@ namespace UrnaApi.Dominio.AcessoDados
 
         private bool ValidarCandidato(Candidato canditato)
         {
+            var tempCandidato = new Candidato();
             bool valido = true;
 
             if (String.IsNullOrWhiteSpace(canditato.NomeCompleto) || String.IsNullOrWhiteSpace(canditato.NomePopular))
@@ -252,22 +253,26 @@ namespace UrnaApi.Dominio.AcessoDados
                 valido = false;
             }
 
-            if (this.BuscarPorNomePopular(canditato.NomePopular) != null)
+            tempCandidato = this.BuscarPorNomePopular(canditato.NomePopular);
+            if (tempCandidato != null && tempCandidato.Id != canditato.Id)
             {
                 valido = false;
             }
 
-            if (this.BuscarPorRegistroTRE(canditato.RegistroTRE) != null)
+            tempCandidato = this.BuscarPorRegistroTRE(canditato.RegistroTRE);
+            if (tempCandidato != null && tempCandidato.Id != canditato.Id)
             {
                 valido = false;
             }
 
-            if (this.BuscarPorNumero(canditato.Numero) != null)
+            tempCandidato = this.BuscarPorNumero(canditato.Numero);
+            if (tempCandidato != null && tempCandidato.Id != canditato.Id)
             {
                 valido = false;
             }
 
-            if (this.BuscarPrefeitoPorPartido(canditato.IdPartido) != null)
+            tempCandidato = this.BuscarPrefeitoPorPartido(canditato.IdPartido);
+            if (tempCandidato != null && tempCandidato.Id != canditato.Id)
             {
                 valido = false;
             }
