@@ -55,7 +55,6 @@
     <Compile Include="ModuloCargo\Cargo.cs" />
     <Compile Include="ModuloCargo\CargoServicoDominio.cs" />
     <Compile Include="ModuloCargo\ICargoRepositorio.cs" />
-    <Compile Include="ModuloEleicao\Eleicao.cs" />
     <Compile Include="ModuloEleitor\Eleitor.cs" />
     <Compile Include="ModuloEleitor\EleitorServicoDominio.cs" />
     <Compile Include="ModuloEleitor\IEleitorRepositorio.cs" />
