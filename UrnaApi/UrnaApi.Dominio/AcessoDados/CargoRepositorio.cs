@@ -41,7 +41,27 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public void Editar(Cargo item)
         {
-            throw new Exception();
+            if(FindByName(item.Nome).Count != 0)
+            {
+                throw new Exception("Já existe um cargo com esse nome");
+            }
+            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+            using (TransactionScope transacao = new TransactionScope())
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
+                IDbCommand comando = connection.CreateCommand();
+                comando.CommandText =
+                    "UPDATE Cargo SET Nome = @paramNome, Situacao = @paramSituacao WHERE IDCargo = @paramIDCargo";
+                comando.AddParameter("paramNome", item.Nome);
+                comando.AddParameter("paramSituacao", item.Situacao);
+                comando.AddParameter("paramIDCargo", item.Id);
+                connection.Open();
+
+                comando.ExecuteNonQuery();
+
+                transacao.Complete();
+                connection.Close();
+            }
         }
 
         public Cargo FindById(int id)
