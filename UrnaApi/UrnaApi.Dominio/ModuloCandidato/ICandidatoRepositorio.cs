@@ -10,5 +10,7 @@ namespace UrnaApi.Dominio.ModuloCandidato
     public interface ICandidatoRepositorio : IRepositorio<Candidato>
     {
         void Excluir(Candidato item);
+
+        Candidato BuscarPorNomePopular(string nome);
     }
 }

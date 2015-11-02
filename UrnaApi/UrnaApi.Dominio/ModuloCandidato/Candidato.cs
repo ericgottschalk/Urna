@@ -24,5 +24,7 @@ namespace UrnaApi.Dominio.ModuloCandidato
         public int IdCargo { get; set; }
 
         public bool Exibe { get; set; }
+
+        public string Foto { get; set; }
     }
 }
