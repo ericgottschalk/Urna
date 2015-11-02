@@ -60,6 +60,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="VotoServicoDominioTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UrnaApi.Dominio\UrnaApi.Dominio.csproj">

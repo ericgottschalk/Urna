@@ -43,7 +43,7 @@ namespace UrnaApi.Dominio.AcessoDados
             return eleitorVotou;
         }
 
-        public void RegistrarVoto(string cpf,int numero)
+        public void RegistrarVoto(string cpf, int numero)
         {
             if (!VerificaSeVotou(cpf))
             {
@@ -56,7 +56,7 @@ namespace UrnaApi.Dominio.AcessoDados
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
-                Candidato candidato=candidatoDominio.BuscarPorNumero(numero);
+                Candidato candidato = candidatoDominio.BuscarPorNumero(numero);
                 IDbCommand comandoInsere = connection.CreateCommand();
                 comandoInsere.CommandText = "INSERT INTO Voto (IDCandidato) VALUES (@paramIDCandidato)";
                 comandoInsere.AddParameter("paramIDCandidato", candidato.Id);
