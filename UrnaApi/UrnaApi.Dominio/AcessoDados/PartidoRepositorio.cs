@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UrnaApi.Dominio.ModuloPartido;
-using DbExtensions;
 using System.Transactions;
 using System.Data;
 using System.Data.SqlClient;

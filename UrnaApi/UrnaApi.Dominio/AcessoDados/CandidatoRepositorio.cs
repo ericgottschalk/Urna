@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UrnaApi.Dominio.ModuloCandidato;
-using DbExtensions;
 using System.Transactions;
 
 namespace UrnaApi.Dominio.AcessoDados

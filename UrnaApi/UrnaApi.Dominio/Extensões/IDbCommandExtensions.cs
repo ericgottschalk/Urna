@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DbExtensions
+namespace System
 {
     public static class IDbCommandExtensions
     {
