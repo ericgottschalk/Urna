@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using UrnaApi.Dominio.ModuloVoto;
+using UrnaApi.Dominio.ModuloCandidato;
 
 namespace UrnaApi.Dominio.AcessoDados
 {
@@ -42,19 +43,23 @@ namespace UrnaApi.Dominio.AcessoDados
             return eleitorVotou;
         }
 
-        public void RegistrarVoto(string cpf,int idCandidato)
+        public void RegistrarVoto(string cpf,int numero)
         {
             if (!VerificaSeVotou(cpf))
             {
                 throw new Exception("O eleitor com esse CPF já votou");
             }
 
+            ICandidatoRepositorio repositorio = new CandidatoRepositorio();
+            CandidatoServicoDominio candidatoDominio = new CandidatoServicoDominio(repositorio);
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
+                Candidato candidato=candidatoDominio.BuscarPorNumero(numero);
                 IDbCommand comandoInsere = connection.CreateCommand();
                 comandoInsere.CommandText = "INSERT INTO Voto (IDCandidato) VALUES (@paramIDCandidato)";
-                comandoInsere.AddParameter("paramIDCandidato", idCandidato);
+                comandoInsere.AddParameter("paramIDCandidato", candidato.Id);
 
                 IDbCommand comandoAtualiza = connection.CreateCommand();
                 comandoAtualiza.CommandText = "UPDATE Eleitor SET Votou = 'S' WHERE CPF = @paramCPF";
