@@ -39,5 +39,20 @@ namespace UrnaApi.Dominio.ModuloEleitor
         {
             return this.repositorio.FindByName(nome);
         }
+
+        public Eleitor BusarPorCpf(string cpf)
+        {
+            return this.repositorio.BuscarPorCpf(cpf);
+        }
+
+        public Eleitor BuscarPorRG(string rg)
+        {
+            return this.repositorio.BuscarPorRG(rg);
+        }
+
+        public Eleitor BuscarPorTituloEleitor(string titulo)
+        {
+            return this.repositorio.BuscarPorTituloEleitor(titulo);
+        }
     }
 }

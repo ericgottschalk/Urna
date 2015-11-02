@@ -44,17 +44,17 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 IDbCommand cmd = connection.CreateCommand();
                 cmd.CommandText = "INSERT INTO Eleitor(Nome, TituloEleitoral, RG, CPF, DataNascimento, ZonaEleitoral, Secao, Situacao, Votou) "
-                                  + "VALUE (@paramNome,@paramTituloEleitoral,@paramRG,@paramCPF,@paramDataNascimento,@paramZonaEleitoral,@paramSecao,@paramSituacao,@paramVotou)";
+                                  + "VALUES (@paramNome,@paramTitulo,@paramRG,@paramCPF,@paramData,@paramZona,@paramSecao,@paramSituacao,@paramVotou)";
 
                 cmd.AddParameter("paramNome", item.Nome);
-                cmd.AddParameter("paramTituloEleitoral", item.TituloEleitor);
+                cmd.AddParameter("paramTitulo", item.TituloEleitor);
                 cmd.AddParameter("paramRG", item.RG);
                 cmd.AddParameter("paramCPF", item.CPF);
-                cmd.AddParameter("paramDataNascimento", item.DataNascimento);
-                cmd.AddParameter("paramZonaEleitoral", item.ZonaEleitoral);
-                cmd.AddParameter(",@paramSecao", item.Secao);
-                cmd.AddParameter(",@paramSituacao", item.Situacao);
-                cmd.AddParameter(",@paramVotou", item.Votou);
+                cmd.AddParameter("paramData", item.DataNascimento);
+                cmd.AddParameter("paramZona", item.ZonaEleitoral);
+                cmd.AddParameter("paramSecao", item.Secao);
+                cmd.AddParameter("paramSituacao", item.Situacao);
+                cmd.AddParameter("paramVotou", item.Votou);
 
                 connection.Open();
                 cmd.ExecuteNonQuery();
@@ -74,19 +74,19 @@ namespace UrnaApi.Dominio.AcessoDados
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 IDbCommand cmd = connection.CreateCommand();
-                cmd.CommandText = "UPDATE Eleitor SET Nome=@paramNome, TituloEleitoral=@paramTituloEleitoral, RG=@paramRG, CPF=@paramCPF, DataNascimento=@paramDataNascimento, "
-                                  + "ZonaEleitoral=@paramZonaEleitoral, Secao=@paramSecao, Situacao=@paramSituacao, Votou=@paramVotou " 
+                cmd.CommandText = "UPDATE Eleitor SET Nome=@paramNome, TituloEleitoral=@paramTitulo, RG=@paramRG, CPF=@paramCPF, DataNascimento=@paramData, "
+                                  + "ZonaEleitoral=@paramZona, Secao=@paramSecao, Situacao=@paramSituacao, Votou=@paramVotou " 
                                   + "WHERE idEleitor = @paramIdEleitor";
 
                 cmd.AddParameter("paramNome", item.Nome);
-                cmd.AddParameter("paramTituloEleitoral", item.TituloEleitor);
+                cmd.AddParameter("paramTitulo", item.TituloEleitor);
                 cmd.AddParameter("paramRG", item.RG);
                 cmd.AddParameter("paramCPF", item.CPF);
-                cmd.AddParameter("paramDataNascimento", item.DataNascimento);
-                cmd.AddParameter("paramZonaEleitoral", item.ZonaEleitoral);
-                cmd.AddParameter(",@paramSecao", item.Secao);
-                cmd.AddParameter(",@paramSituacao", item.Situacao);
-                cmd.AddParameter(",@paramVotou", item.Votou);
+                cmd.AddParameter("paramData", item.DataNascimento);
+                cmd.AddParameter("paramZona", item.ZonaEleitoral);
+                cmd.AddParameter("paramSecao", item.Secao);
+                cmd.AddParameter("paramSituacao", item.Situacao);
+                cmd.AddParameter("paramVotou", item.Votou);
                 cmd.AddParameter("paramIdEleitor", item.Id);
 
                 connection.Open();
@@ -144,10 +144,10 @@ namespace UrnaApi.Dominio.AcessoDados
         {
             using (IDbConnection connection = new SqlConnection(this.connectionString))
             {
-                var eleitor = new Eleitor();
+                Eleitor eleitor = null;
 
                 IDbCommand cmd = connection.CreateCommand();
-                cmd.CommandText = "SELECT * FROM Eleitor WHERE CPF = @paramRg";
+                cmd.CommandText = "SELECT * FROM Eleitor WHERE RG = @paramRg";
                 cmd.AddParameter("paramRg", rg);
                 connection.Open();
 
@@ -166,7 +166,7 @@ namespace UrnaApi.Dominio.AcessoDados
         {
             using (IDbConnection connection = new SqlConnection(this.connectionString))
             {
-                var eleitor = new Eleitor();
+                Eleitor eleitor = null;
 
                 IDbCommand cmd = connection.CreateCommand();
                 cmd.CommandText = "SELECT * FROM Eleitor WHERE CPF = @paramCpf";
@@ -188,11 +188,11 @@ namespace UrnaApi.Dominio.AcessoDados
         {
             using (IDbConnection connection = new SqlConnection(this.connectionString))
             {
-                var eleitor = new Eleitor();
+                Eleitor eleitor = null;
 
                 IDbCommand cmd = connection.CreateCommand();
                 cmd.CommandText = "SELECT * FROM Eleitor WHERE TituloEleitoral = @paramTitulo";
-                cmd.AddParameter("paraparamTitulomCpf", titulo);
+                cmd.AddParameter("paramTitulo", titulo);
                 connection.Open();
 
                 IDataReader reader = cmd.ExecuteReader();
