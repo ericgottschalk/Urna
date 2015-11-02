@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Transactions;
+using UrnaApi.Dominio.ModuloEleicao;
 
 namespace UrnaApi.Dominio.AcessoDados
 {
@@ -21,7 +22,10 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("Este cargo já existe");
             }
-
+            if (Eleicao.Iniciou)
+            {
+                throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
+            }
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(this.connectionString))
             {
@@ -45,7 +49,10 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("Já existe um cargo com esse nome");
             }
-
+            if (Eleicao.Iniciou)
+            {
+                throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
+            }
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -71,7 +78,10 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("Este cargo não existe");
             }
-
+            if (Eleicao.Iniciou)
+            {
+                throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
+            }
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {

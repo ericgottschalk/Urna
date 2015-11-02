@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UrnaApi.Dominio.ModuloCandidato;
 using System.Transactions;
+using UrnaApi.Dominio.ModuloEleicao;
 
 namespace UrnaApi.Dominio.AcessoDados
 {
@@ -21,7 +22,10 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("Candidato não pode ser excluido");
             }
-
+            if (Eleicao.Iniciou)
+            {
+                throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
+            }
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -42,7 +46,10 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("Candidato não pode ser inserido");
             }
-
+            if (Eleicao.Iniciou)
+            {
+                throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
+            }
             using (TransactionScope transation = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -73,7 +80,10 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("Candidato não pode ser editado");
             }
-
+            if (Eleicao.Iniciou)
+            {
+                throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
+            }
             using (TransactionScope transation = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {

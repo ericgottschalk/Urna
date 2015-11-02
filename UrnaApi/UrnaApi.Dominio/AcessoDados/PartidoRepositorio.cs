@@ -8,6 +8,7 @@ using System.Transactions;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using UrnaApi.Dominio.ModuloEleicao;
 
 namespace UrnaApi.Dominio.AcessoDados
 {
@@ -17,6 +18,10 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public void Excluir(Partido partido)
         {
+            if (Eleicao.Iniciou)
+            {
+                throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
+            }
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -35,6 +40,10 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public void Cadastrar(Partido item)
         {
+            if (Eleicao.Iniciou)
+            {
+                throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
+            }
             List<Partido> partidoEncontrado = FindByName(item.Nome);
             if (partidoEncontrado.FindAll(partido => partido.Nome == item.Nome).Count != 0
                 && partidoEncontrado.FindAll(partido => partido.Slogan == item.Slogan).Count != 0)
@@ -62,6 +71,10 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public void Editar(Partido item)
         {
+            if (Eleicao.Iniciou)
+            {
+                throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
+            }
             List<Partido> partidoEncontrado = FindByName(item.Nome);
             if (partidoEncontrado.FindAll(partido => partido.Nome == item.Nome).Count != 0
                 && partidoEncontrado.FindAll(partido => partido.Slogan == item.Slogan).Count != 0)

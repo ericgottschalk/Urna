@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Transactions;
+using UrnaApi.Dominio.ModuloEleicao;
 
 namespace UrnaApi.Dominio.AcessoDados
 {
@@ -17,6 +18,10 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public void Excluir(Eleitor eleitor)
         {
+            if (Eleicao.Iniciou)
+            {
+                throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
+            }
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -37,7 +42,10 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("Eleitor não pode ser inserido");
             }
-
+            if (Eleicao.Iniciou)
+            {
+                throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
+            }
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -68,7 +76,10 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("Eleitor não pode ser editado");
             }
-
+            if (Eleicao.Iniciou)
+            {
+                throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
+            }
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
