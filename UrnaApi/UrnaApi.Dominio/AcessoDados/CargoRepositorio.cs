@@ -16,12 +16,31 @@ namespace UrnaApi.Dominio.AcessoDados
     {
         public void Cadastrar(Cargo item)
         {
-            throw new NotImplementedException();
+            if (FindByName(item.Nome).Count != 0 && FindById(item.Id) != null)
+            {
+                throw new Exception("Este cargo já existe");
+            }
+            string connectionString = ConfigurationManager.ConnectionStrings["URNA"].ConnectionString;
+            using (TransactionScope transacao = new TransactionScope())
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
+                IDbCommand comando = connection.CreateCommand();
+                comando.CommandText =
+                    "INSERT INTO Cargo (Nome,Situacao) VALUES (@paramNome,@paramSituacao)";
+                comando.AddParameter("paramNome",item.Nome);
+                comando.AddParameter("paramSituacao", item.Situacao);
+                connection.Open();
+
+                comando.ExecuteNonQuery();
+
+                connection.Close();
+            }
+
         }
 
         public void Editar(Cargo item)
         {
-            throw new NotImplementedException();
+            throw new Exception();
         }
 
         public Cargo FindById(int id)
