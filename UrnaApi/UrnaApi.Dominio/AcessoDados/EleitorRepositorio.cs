@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UrnaApi.Dominio.ModuloEleitor;
+using DbExtensions;
 
 namespace UrnaApi.Dominio.AcessoDados
 {
