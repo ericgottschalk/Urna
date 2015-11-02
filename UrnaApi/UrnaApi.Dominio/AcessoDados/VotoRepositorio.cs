@@ -18,10 +18,10 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public bool VerificaSeVotou(string cpf)
         {
-            bool eleitorVotou = false;
-            
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
+                bool eleitorVotou = false;
+
                 IDbCommand comando = connection.CreateCommand();
                 comando.CommandText =
                     "SELECT Nome,CPF,Votou FROM Eleitor WHERE CPF = @paramCPF";
@@ -38,13 +38,14 @@ namespace UrnaApi.Dominio.AcessoDados
                         eleitorVotou = true;
                     }
                 }
+
+                return eleitorVotou;
             }
-            return eleitorVotou;
         }
 
         public void RegistrarVoto(string cpf, int numero)
         {
-            if (!VerificaSeVotou(cpf))
+            if (this.VerificaSeVotou(cpf))
             {
                 throw new Exception("O eleitor com esse CPF já votou");
             }
