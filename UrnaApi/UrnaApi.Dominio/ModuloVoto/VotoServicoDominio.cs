@@ -19,5 +19,20 @@ namespace UrnaApi.Dominio.ModuloVoto
         {
             this.repositorio.RegistrarVoto(cpf, numero);
         }
+
+        public Dictionary<string, int> RelaçãoCandidatoVoto()
+        {
+            return this.repositorio.RelaçãoCandidatoVoto();
+        }
+
+        public int QuantosEleitoresVotaram()
+        {
+            return this.repositorio.QuantosEleitoresVotaram();
+        }
+
+        public int QuantosEleitoresNaoVotaram()
+        {
+            return this.repositorio.QuantosEleitoresNaoVotaram();
+        }
     }
 }

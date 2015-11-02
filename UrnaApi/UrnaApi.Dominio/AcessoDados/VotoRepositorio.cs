@@ -75,7 +75,7 @@ namespace UrnaApi.Dominio.AcessoDados
             }
         }
 
-        public Dictionary<string,int> relaçãoCandidatoVoto()
+        public Dictionary<string, int> RelaçãoCandidatoVoto()
         {
             Dictionary<string, int> relacaoCandidatoVoto = new Dictionary<string, int>();
 
@@ -95,6 +95,50 @@ namespace UrnaApi.Dominio.AcessoDados
                 }
             }
             return relacaoCandidatoVoto;
+        }
+
+        public int QuantosEleitoresVotaram()
+        {
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
+                int quant = 0;
+
+                IDbCommand comando = connection.CreateCommand();
+                comando.CommandText =
+                    "SELECT COUNT(1) as Votaram FROM Eleitor WHERE Votou = 'S'";
+
+                connection.Open();
+                IDataReader reader = comando.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    quant = Convert.ToInt32(reader["Votaram"]);
+                }
+
+                return quant;
+            }
+        }
+
+        public int QuantosEleitoresNaoVotaram()
+        {
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
+                int quant = 0;
+
+                IDbCommand comando = connection.CreateCommand();
+                comando.CommandText =
+                    "SELECT COUNT(1) as NaoVotaram FROM Eleitor WHERE Votou = 'N'";
+
+                connection.Open();
+                IDataReader reader = comando.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    quant = Convert.ToInt32(reader["NaoVotaram"]);
+                }
+
+                return quant;
+            }
         }
     }
 }

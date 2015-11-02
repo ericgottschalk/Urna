@@ -9,5 +9,11 @@ namespace UrnaApi.Dominio.ModuloVoto
     public interface IVotoRepositorio
     {
         void RegistrarVoto(string cpf,int numero);
+
+        Dictionary<string, int> RelaçãoCandidatoVoto();
+
+        int QuantosEleitoresVotaram();
+
+        int QuantosEleitoresNaoVotaram();
     }
 }
