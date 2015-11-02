@@ -15,9 +15,9 @@ namespace UrnaApi.Dominio.ModuloVoto
             this.repositorio = repositorio;
         }
 
-        public void RegistrarVoto(string cpf,int idCandidato)
+        public void RegistrarVoto(string cpf,int numero)
         {
-            this.repositorio.RegistrarVoto(cpf, idCandidato);
+            this.repositorio.RegistrarVoto(cpf, numero);
         }
     }
 }

@@ -8,6 +8,6 @@ namespace UrnaApi.Dominio.ModuloVoto
 {
     public interface IVotoRepositorio
     {
-        void RegistrarVoto(string cpf,int idCandidato);
+        void RegistrarVoto(string cpf,int numero);
     }
 }
