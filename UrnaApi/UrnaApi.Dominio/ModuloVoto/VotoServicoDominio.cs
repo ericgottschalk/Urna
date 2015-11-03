@@ -22,7 +22,7 @@ namespace UrnaApi.Dominio.ModuloVoto
 
         public Dictionary<string, int> RelaçãoCandidatoVoto()
         {
-            return this.repositorio.RelaçãoCandidatoVoto();
+            return this.repositorio.RelacaoCandidatoVoto();
         }
 
         public int QuantosEleitoresVotaram()

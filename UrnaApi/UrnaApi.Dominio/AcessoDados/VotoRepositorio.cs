@@ -81,7 +81,7 @@ namespace UrnaApi.Dominio.AcessoDados
             }
         }
 
-        public Dictionary<string, int> RelaçãoCandidatoVoto()
+        public Dictionary<string, int> RelacaoCandidatoVoto()
         {
             Dictionary<string, int> relacaoCandidatoVoto = new Dictionary<string, int>();
 

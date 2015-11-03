@@ -10,7 +10,7 @@ namespace UrnaApi.Dominio.ModuloVoto
     {
         void RegistrarVoto(string cpf,int numero);
 
-        Dictionary<string, int> RelaçãoCandidatoVoto();
+        Dictionary<string, int> RelacaoCandidatoVoto();
 
         int QuantosEleitoresVotaram();
 
