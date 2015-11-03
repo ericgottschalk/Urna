@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using UrnaApi.Dominio.ModuloVoto;
 using UrnaApi.Dominio.ModuloCandidato;
+using UrnaApi.Dominio.ModuloEleicao;
 
 namespace UrnaApi.Dominio.AcessoDados
 {
@@ -45,6 +46,11 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public void RegistrarVoto(string cpf, int numero)
         {
+            if (!Eleicao.Iniciou)
+            {
+                throw new Exception("Eleição não iniciou, não é possível votar");
+            }
+
             if (this.VerificaSeVotou(cpf))
             {
                 throw new Exception("O eleitor com esse CPF já votou");

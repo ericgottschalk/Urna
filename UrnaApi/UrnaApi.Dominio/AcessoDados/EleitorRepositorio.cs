@@ -22,6 +22,7 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
             }
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -38,14 +39,16 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public void Cadastrar(Eleitor item)
         {
-            if (!this.ValidarEleitor(item))
-            {
-                throw new Exception("Eleitor não pode ser inserido");
-            }
             if (Eleicao.Iniciou)
             {
                 throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
             }
+
+            if (!this.ValidarEleitor(item))
+            {
+                throw new Exception("Eleitor não pode ser inserido");
+            }
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -72,14 +75,16 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public void Editar(Eleitor item)
         {
-            if (!this.ValidarEleitor(item))
-            {
-                throw new Exception("Eleitor não pode ser editado");
-            }
             if (Eleicao.Iniciou)
             {
                 throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
             }
+
+            if (!this.ValidarEleitor(item))
+            {
+                throw new Exception("Eleitor não pode ser editado");
+            }
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {

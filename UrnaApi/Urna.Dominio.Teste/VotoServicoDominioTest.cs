@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UrnaApi.Dominio.AcessoDados;
 using UrnaApi.Dominio.ModuloCandidato;
+using UrnaApi.Dominio.ModuloEleicao;
 using UrnaApi.Dominio.ModuloEleitor;
 using UrnaApi.Dominio.ModuloVoto;
 
@@ -27,7 +28,9 @@ namespace Urna.Dominio.Teste
             var eleitor = eleitorServico.FindByName("")[0];
             var candidato = candidatoServico.FindByName("")[0];
 
+            Eleicao.IniciarEleicao();
             votoServico.RegistrarVoto(eleitor.CPF, candidato.Numero);
+            Eleicao.TerminarEleicao();
 
             eleitor = eleitorServico.FindById(eleitor.Id);
 

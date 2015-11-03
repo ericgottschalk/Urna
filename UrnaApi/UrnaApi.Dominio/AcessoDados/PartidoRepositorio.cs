@@ -22,6 +22,7 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
             }
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -44,6 +45,7 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
             }
+
             List<Partido> partidoEncontrado = FindByName(item.Nome);
             if (partidoEncontrado.FindAll(partido => partido.Nome == item.Nome).Count != 0
                 && partidoEncontrado.FindAll(partido => partido.Slogan == item.Slogan).Count != 0)
@@ -75,6 +77,7 @@ namespace UrnaApi.Dominio.AcessoDados
             {
                 throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
             }
+
             List<Partido> partidoEncontrado = FindByName(item.Nome);
             if (partidoEncontrado.FindAll(partido => partido.Nome == item.Nome).Count != 0
                 && partidoEncontrado.FindAll(partido => partido.Slogan == item.Slogan).Count != 0)

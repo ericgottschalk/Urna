@@ -18,14 +18,16 @@ namespace UrnaApi.Dominio.AcessoDados
         
         public void Excluir(Candidato item)
         {
-            if (item.NomeCompleto == "Voto Nulo" || item.NomeCompleto == "Voto em Branco")
-            {
-                throw new Exception("Candidato não pode ser excluido");
-            }
             if (Eleicao.Iniciou)
             {
                 throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
             }
+
+            if (item.NomeCompleto == "Voto Nulo" || item.NomeCompleto == "Voto em Branco")
+            {
+                throw new Exception("Candidato não pode ser excluido");
+            }
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -42,14 +44,16 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public void Cadastrar(Candidato item)
         {
-            if (!this.ValidarCandidato(item))
-            {
-                throw new Exception("Candidato não pode ser inserido");
-            }
             if (Eleicao.Iniciou)
             {
                 throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
             }
+
+            if (!this.ValidarCandidato(item))
+            {
+                throw new Exception("Candidato não pode ser inserido");
+            }
+
             using (TransactionScope transation = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -76,14 +80,16 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public void Editar(Candidato item)
         {
-            if (!this.ValidarCandidato(item))
-            {
-                throw new Exception("Candidato não pode ser editado");
-            }
             if (Eleicao.Iniciou)
             {
                 throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
             }
+
+            if (!this.ValidarCandidato(item))
+            {
+                throw new Exception("Candidato não pode ser editado");
+            }
+
             using (TransactionScope transation = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {

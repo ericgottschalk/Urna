@@ -18,14 +18,16 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public void Cadastrar(Cargo item)
         {
-            if (FindByName(item.Nome).Count != 0)
-            {
-                throw new Exception("Este cargo já existe");
-            }
             if (Eleicao.Iniciou)
             {
                 throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
             }
+
+            if (FindByName(item.Nome).Count != 0)
+            {
+                throw new Exception("Este cargo já existe");
+            }
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(this.connectionString))
             {
@@ -45,14 +47,16 @@ namespace UrnaApi.Dominio.AcessoDados
 
         public void Editar(Cargo item)
         {
-            if(FindByName(item.Nome).Count != 0)
-            {
-                throw new Exception("Já existe um cargo com esse nome");
-            }
             if (Eleicao.Iniciou)
             {
                 throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
             }
+
+            if(FindByName(item.Nome).Count != 0)
+            {
+                throw new Exception("Já existe um cargo com esse nome");
+            }
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
@@ -74,14 +78,16 @@ namespace UrnaApi.Dominio.AcessoDados
         //mudar situação == ativar ou inativar o cargo
         public void MudarSituacao(Cargo cargo)
         {
-            if(FindById(cargo.Id) == null)
-            {
-                throw new Exception("Este cargo não existe");
-            }
             if (Eleicao.Iniciou)
             {
                 throw new Exception("As eleições iniciaram não é possivel fazer essa operação");
             }
+
+            if(FindById(cargo.Id) == null)
+            {
+                throw new Exception("Este cargo não existe");
+            }
+
             using (TransactionScope transacao = new TransactionScope())
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
