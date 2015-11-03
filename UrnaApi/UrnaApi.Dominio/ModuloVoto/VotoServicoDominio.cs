@@ -20,7 +20,7 @@ namespace UrnaApi.Dominio.ModuloVoto
             this.repositorio.RegistrarVoto(cpf, numero);
         }
 
-        public Dictionary<string, int> RelaçãoCandidatoVoto()
+        public Dictionary<string, int> RelacaoCandidatoVoto()
         {
             return this.repositorio.RelacaoCandidatoVoto();
         }
